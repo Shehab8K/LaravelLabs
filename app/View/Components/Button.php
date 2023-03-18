@@ -13,8 +13,9 @@ class Button extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $color,
         public string $type,
+        public string $class
+
     )
     { }
 
@@ -28,6 +29,6 @@ class Button extends Component
 
     public function boot(): void
     {
-    Blade::component('package-button', Button::class);
+    Blade::component('button', Button::class);
     }
 }

@@ -20,7 +20,9 @@
     <label for="author" class="form-label">Post Creator</label>
     <input type="text" class="form-control" id="author" aria-describedby="emailHelp">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+  <x-button type="submit" class="success">ٍSubmit</x-button>
+  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 </form>
 
 @endsection
