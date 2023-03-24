@@ -1,1 +1,1 @@
-<input type="{{$type}}" class="btn btn-{{$class}}" value="{{$slot}}"/>
+<button type="{{$type}}" class="btn btn-{{$class}}">{{$slot}}</button>
