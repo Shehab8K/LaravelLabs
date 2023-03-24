@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ShowPostRequest;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Post;
@@ -45,7 +47,7 @@ class PostController extends Controller
         return view('post.index', ['posts' => $allPosts, 'postLinks'=>$posts,'update'=>$update, 'delete'=>$delete]);
     }
 
-    public function show($id)
+    public function show(ShowPostRequest $request, $id)
     {
         // Next time I want to retrieve post with its users together
         $post = Post::where('id', $id)->with(['comments.user'])->get()->map(function ($post) {
@@ -57,6 +59,8 @@ class PostController extends Controller
         if ($post) {
             $userID = $post->user_id;
             $user = User::where('id', $userID)->first();
+        } else {
+            abort(404);
         }
         $users = User::all();
         return view('post.show', ['post' => $post, 'user'=> $user,'users'=>$users]);
@@ -68,29 +72,32 @@ class PostController extends Controller
         return view("post.create", ['users' => $users]);
     }
 
-    public function store()
+    public function store(StorePostRequest $request)
     {
-        $title = request()->title;
-        $description = request()->description;
-        $postCreator = request()->post_creator;
+        $title = $request->input('title');
+        $description = $request->input('description');
+        $user_id = $request->input('post_creator');
 
         Post::create([
             'title' => $title,
             'description' => $description,
-            'user_id' => $postCreator,
+            'user_id' => $user_id,
         ]);
         return redirect()->route('posts.index');
     }
 
-    public function edit($id)
+    public function edit(ShowPostRequest $request, $id)
     {
         $post = Post::where('id', $id)->first();
+        if (!$post) {
+            abort(404);
+        }
         $author = User::where('id', $post->user_id)->first();
         $users = User::all();
         return view("post.edit", ['post' => $post, 'users'=> $users, 'author'=>$author]);
     }
 
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
         $title = $request->input('title');
         $description = $request->input('description');
