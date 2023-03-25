@@ -14,7 +14,7 @@
 </div>
 @endif
 
-<form method="post" action="{{route('posts.store')}}">
+<form method="post" action="{{route('posts.store')}}" enctype="multipart/form-data">
   @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Title</label>
@@ -25,6 +25,11 @@
     <label for="exampleFormControlTextarea1" class="form-label">Description</label>
     <textarea class="form-control" title="description" id="exampleFormControlTextarea1" rows="3" required
       name="description"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" name="image" id="image" class="form-control">
   </div>
 
   <div class="mb-3">

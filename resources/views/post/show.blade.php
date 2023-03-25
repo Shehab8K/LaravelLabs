@@ -45,7 +45,7 @@
                 <input type="hidden" name="commentable_id" value="{{ $post->id }}">
                 <input type="hidden" name="commentable_type" value="App\Models\Post">
                 <textarea name="comment" rows="3" class="form-control" required></textarea>
-
+                <img src="{{ asset($post->image_path) }}" alt="Post Image">
                 <select class="form-select" aria-label="Default select example" name="user_id" required>
                     <option value="{{$users[0]->id}}">{{$users[0]->name}}</option>
                     @foreach($users as $user)

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -74,10 +75,13 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $input = $request->only(['title','description','post_creator']);
+        $path = $request->file('image')->store('public/images');
+        $path = str_replace('public', 'storage', $path);
 
         Post::create([
             'title' => $input['title'],
             'description' => $input['description'],
+            'image_path'=> $path,
             'user_id' => $input['post_creator'],
         ]);
         return redirect()->route('posts.index');
