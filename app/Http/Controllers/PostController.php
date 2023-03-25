@@ -33,7 +33,6 @@ class PostController extends Controller
             $post->created_at_formatted = Carbon::parse($post->created_at)->format('Y-m-d');
             $post->updated_at_formatted = Carbon::parse($post->updated_at)->format('Y-m-d');
         }
-        
         $update = null;
         $delete = null;
 
@@ -74,14 +73,12 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $title = $request->input('title');
-        $description = $request->input('description');
-        $user_id = $request->input('post_creator');
+        $input = $request->only(['title','description','post_creator']);
 
         Post::create([
-            'title' => $title,
-            'description' => $description,
-            'user_id' => $user_id,
+            'title' => $input['title'],
+            'description' => $input['description'],
+            'user_id' => $input['post_creator'],
         ]);
         return redirect()->route('posts.index');
     }
@@ -99,14 +96,11 @@ class PostController extends Controller
 
     public function update(StorePostRequest $request, $id)
     {
-        $title = $request->input('title');
-        $description = $request->input('description');
-        $user_id = $request->input('post_creator');
-        
+        $input = $request->only(['title','description','post_creator']);
         $postUpdate = Post::where('id', $id)->update([
-            'title'=>$title,
-            'description'=>$description,
-            'user_id'=>$user_id
+            'title' => $input['title'],
+            'description' => $input['description'],
+            'user_id' => $input['post_creator'],
         ]);
 
         return redirect()->route('posts.index')->with('update', $postUpdate);

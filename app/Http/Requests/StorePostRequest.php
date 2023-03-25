@@ -29,6 +29,7 @@ class StorePostRequest extends FormRequest
                 Rule::unique('posts')->ignore($this->post)
             ],
             'description' => ['required','min:10'],
+            'post_creator' => ['required', 'exists:users,id'],
         ];
     }
 }
