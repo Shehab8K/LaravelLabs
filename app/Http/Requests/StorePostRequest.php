@@ -29,7 +29,7 @@ class StorePostRequest extends FormRequest
                 Rule::unique('posts')->ignore($this->post)
             ],
             'description' => ['required','min:10'],
-            'image' => 'required|file|mimes:jpeg,png|max:2048',
+            'image' => 'file|mimes:jpeg,png|max:2048',
             'post_creator' => ['required', 'exists:users,id'],
         ];
     }
